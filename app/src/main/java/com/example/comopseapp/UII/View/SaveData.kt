@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,14 +29,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerValue
@@ -63,6 +73,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -78,6 +89,7 @@ import com.example.comopseapp.R
 import com.example.comopseapp.R.drawable.axis_bank_logo2
 import com.example.comopseapp.ui.theme.AxisColor
 import com.example.comopseapp.ui.theme.ComopseAppTheme
+import com.example.comopseapp.ui.theme.White
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.io.IOException
@@ -113,7 +125,7 @@ class SaveData : ComponentActivity() {
                     applicationContext.resources,
                     R.drawable.useraccount
                 )
-                SaveDataScreen()
+                NavigationDrawerss()
             }
         }
 
@@ -143,7 +155,7 @@ class SaveData : ComponentActivity() {
                 email = it.email_name
                 imageDp = byteArrayToBitmap(it.image)
                 setContent {
-                    SaveDataScreen()
+                    NavigationDrawerss()
                 }
 
                 Save_Update_Button = "Update"
@@ -165,23 +177,24 @@ class SaveData : ComponentActivity() {
     fun SaveDataScreen() {
         Column(
             modifier = Modifier
+                .padding(top = 60.dp)
                 .background(AxisColor)
                 .fillMaxSize()
         ) {
 
-            ShowData().MyActionBar(Title = "Customer Account")
+//            ShowData().MyActionBar(Title = "Customer Account")
 
             Column(
                 modifier = Modifier
                     .padding(10.dp)
                     .fillMaxWidth()
                     .verticalScroll(rememberScrollState())
+                    .clip(RoundedCornerShape(8.dp))
                     .background(
-                        Brush.verticalGradient(
+                        Brush.horizontalGradient(
                             colors = listOf(
-                                Color.White,
-                                AxisColor,
-                                Color.White
+                                Color.Red,
+                                Color(0xFF396AFA)
                             )
                         )
                     )
@@ -210,12 +223,12 @@ class SaveData : ComponentActivity() {
                     .padding(5.dp)
                     .align(Alignment.CenterHorizontally)
                     .size(30.dp),
-                tint = AxisColor
+                tint = Color.White
             )
             Text(
                 text = "Customer Account Sign_Up",
                 style = MaterialTheme.typography.labelLarge.copy(fontSize = 15.sp),
-                color = AxisColor,
+                color = Color.White,
                 modifier = Modifier
                     .padding(5.dp)
                     .align(Alignment.CenterHorizontally)
@@ -438,7 +451,6 @@ class SaveData : ComponentActivity() {
         }
         Box(
             modifier = Modifier
-//                .align(Alignment.End)
 
         ) {
             IconButton(onClick = { expend = !expend },
@@ -473,6 +485,10 @@ class SaveData : ComponentActivity() {
                 )
             }
         }
+
+        setContent {
+            NavigationDrawerss()
+        }
     }
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -488,7 +504,7 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 
             imageDp = compressedBitmap
             setContent {
-                SaveDataScreen()
+                NavigationDrawerss()
             }
 
         } catch (e: IOException) {
@@ -498,9 +514,8 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
     if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
         val photo: Bitmap = data?.extras?.get("data") as Bitmap
         imageDp=photo
-//                Toast.makeText(this,imageDp.toString(),Toast.LENGTH_SHORT).show()
         setContent {
-            SaveDataScreen()
+            NavigationDrawerss()
         }
     }
 }
@@ -540,152 +555,207 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun NavigationDrawerss() {
-        val context= LocalContext.current
         val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
         val scope = rememberCoroutineScope()
-
-            ModalNavigationDrawer(
-                drawerState = drawerState,
-                drawerContent = {
-                    ModalDrawerSheet(
+        val context = LocalContext.current
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            drawerContent = {
+                ModalDrawerSheet(
+                    Modifier
+                        .fillMaxHeight()
+                        .width(300.dp)
+                        .clip(RectangleShape)
+                ) {
+                    Column(
                         Modifier
-                            .fillMaxHeight()
-                            .width(300.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .background(
+                                Brush.horizontalGradient(
+                                    colors = listOf(
+                                        Color.Red,
+                                        Color(0xFF396AFA)
+                                    )
+                                )
+                            )
+                            .padding(10.dp)
                     ) {
+
                         Row(
                             Modifier
                                 .align(Alignment.CenterHorizontally)
-                                .padding(10.dp)
-                        ) {
+                                .padding(5.dp)
 
+                        ) {
                             Icon(
                                 painter = painterResource(id = axis_bank_logo2),
+                                tint = Color.White,
                                 contentDescription = "Logo",
-                                Modifier
-                                    .size(20.dp)
+                                modifier = Modifier
+                                    .size(30.dp)
+                                    .align(Alignment.CenterVertically)
+
+
+
                             )
                             Text(
-                                "Axis Bank", modifier = Modifier
-                                    .background(Color.White)
+                                "Axis Bank", modifier = Modifier,
+                                style = MaterialTheme.typography.labelLarge.copy(fontSize = 20.sp),
+                                color = Color.White
+
                             )
                         }
-
-
                         Image(
-                            painter = painterResource(id = R.drawable.user),
+                            bitmap = imageDp.asImageBitmap(),
                             contentDescription = "MyDp",
                             Modifier
-                                .align(Alignment.CenterHorizontally)
+                                .size(120.dp)
+                                .clip(CircleShape)
                                 .background(Color.White)
-                                .padding(10.dp)
-                                .clip(CircleShape),
-                        )
-                        Text(
-                            "", modifier = Modifier
-                                .fillMaxWidth()
-                                .height(2.dp)
                                 .align(Alignment.CenterHorizontally)
-                                .background(Color.White)
-                        )
-                        NavigationDrawerItem(
-                            label = { Text(text = "Home", color = Color.Black) },
-                            selected = false,
-                            onClick = {
-                                Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show()
-                            },
 
+                        )
+                        Row(
+                            modifier = Modifier,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Person,
+                                contentDescription = "Star"
                             )
-                        NavigationDrawerItem(
-                            label = { Text(text = "Gallery", color = Color.Black) },
-                            selected = false,
-                            onClick = {
-                                Toast.makeText(context, "Gallery", Toast.LENGTH_SHORT).show()
-                            })
-
-                        NavigationDrawerItem(
-                            label = { Text(text = "About me", color = Color.Black) },
-                            selected = false,
-                            onClick = {
-                                Toast.makeText(context, "About me", Toast.LENGTH_SHORT).show()
-                            })
-
-                        Text(
-                            "", modifier = Modifier
-                                .fillMaxWidth()
-                                .height(2.dp)
-                                .align(Alignment.CenterHorizontally)
-                                .background(Color.White)
-                        )
-
-                        NavigationDrawerItem(
-                            label = { Text(text = "Policy", color = Color.Black) },
-                            selected = false,
-                            onClick = {
-                                Toast.makeText(context, "Policy", Toast.LENGTH_SHORT).show()
-                            })
-
-                        NavigationDrawerItem(
-                            label = { Text(text = "Settings", color = Color.Black) },
-                            selected = false,
-                            onClick = {
-                                Toast.makeText(context, "Settings", Toast.LENGTH_SHORT).show()
-                            })
-
-
-                        NavigationDrawerItem(
-                            label = { Text(text = "Logout", color = Color.Black) },
-                            selected = false,
-                            onClick = {
-                                Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show()
-                            })
-                        // ...other drawer items
-                    }
-                },
-                gesturesEnabled = true
-            ) {
-//Box (Modifier.fillMaxSize()){
-                TopAppBar(
-                    title = { Text("Customer Account") },
-                    modifier = Modifier.background(color = Color.White),
-                    actions = {
-                        IconButton(onClick = { }) {
-                            Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
+                            Spacer(modifier = Modifier.width(2.dp))
+                            Text(
+                                "Username",
+                                modifier = Modifier,
+                                style = MaterialTheme.typography.labelLarge.copy(fontSize = 10.sp),
+                            )
+                        }
+                        Row(
+                            modifier = Modifier,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Phone,
+                                contentDescription = "Star"
+                            )
+                            Spacer(modifier = Modifier.width(2.dp))
+                            Text(
+                                "+9899289232", modifier = Modifier,
+                                style = MaterialTheme.typography.labelLarge.copy(fontSize = 10.sp),
+                            )
                         }
 
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            Toast.makeText(context, "Menu", Toast.LENGTH_SHORT).show()
-                            scope.launch {
-                                if (drawerState.isClosed) {
-                                    drawerState.open()
-                                } else {
-                                    drawerState.close()
-                                }
+                    }
+                    Text(
+                        "", modifier = Modifier
+                            .fillMaxWidth()
+                            .height(2.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .background(Color.White)
+                    )
+                    NavigationDrawerItem(
+                        label = { Text(text = "Home", color = Color.Black) },
+                        selected = false,
+                        onClick = { Toast.makeText(context, "Home", Toast.LENGTH_SHORT).show() },
+                        icon = {
+                            Icon(imageVector = Icons.Filled.Home, contentDescription = "Menu")
+                        }
+                    )
+                    NavigationDrawerItem(
+                        label = { Text(text = "Gallery", color = Color.Black) },
+                        selected = false,
+                        onClick = { Toast.makeText(context, "Gallery", Toast.LENGTH_SHORT).show() },
+                        icon = {
+                            Icon(imageVector = Icons.Filled.Face, contentDescription = "Menu")
+                        }
+
+                    )
+
+                    NavigationDrawerItem(
+                        label = { Text(text = "About me", color = Color.Black) },
+                        selected = false,
+                        onClick = {
+                            Toast.makeText(context, "About me", Toast.LENGTH_SHORT).show()
+                        },
+                        icon = {
+                            Icon(imageVector = Icons.Filled.Person, contentDescription = "Menu")
+                        })
+
+                    Text(
+                        "", modifier = Modifier
+                            .fillMaxWidth()
+                            .height(2.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .background(Color.White)
+                    )
+
+                    NavigationDrawerItem(
+                        label = { Text(text = "Policy", color = Color.Black) },
+                        selected = false,
+                        onClick = { Toast.makeText(context, "Policy", Toast.LENGTH_SHORT).show() },
+                        icon = {
+                            Icon(imageVector = Icons.Filled.DateRange, contentDescription = "Menu")
+                        }
+                    )
+                    NavigationDrawerItem(
+                        label = { Text(text = "Settings", color = Color.Black) },
+                        selected = false,
+                        onClick = {
+                            Toast.makeText(context, "Settings", Toast.LENGTH_SHORT).show()
+                        },
+                        icon = {
+                            Icon(imageVector = Icons.Filled.Settings, contentDescription = "Menu")
+                        })
+
+                    NavigationDrawerItem(
+                        label = { Text(text = "Logout", color = Color.Black) },
+                        selected = false,
+                        onClick = { Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show() },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Filled.MailOutline,
+                                contentDescription = "Menu"
+                            )
+                        })
+                }
+            },
+            gesturesEnabled = true
+        ) {
+            TopAppBar(
+                title = { Text("Customer Account") },
+                modifier = Modifier.background(color = Color.White),
+                actions = {
+                    IconButton(onClick = { }) {
+                        Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
+                    }
+
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        scope.launch {
+                            if (drawerState.isClosed) {
+                                drawerState.open()
+                            } else {
+                                drawerState.close()
                             }
                         }
-
-                        )
-
-                        {
-                            Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu")
-                        }
                     }
-                )
-//}
-                SaveDataScreen()
-                // Screen content
-            }
 
+                    )
 
-
+                    {
+                        Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu")
+                    }
+                }
+            )
+            SaveDataScreen()
+        }
     }
-
     @Preview
     @Composable
     fun MyPreview() {
-//        NavigationDrawerss()
+        NavigationDrawerss()
     }
 }
-
 

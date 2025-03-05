@@ -6,7 +6,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.widget.ScrollView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,7 +17,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,9 +31,16 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -66,6 +74,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
 import com.example.comopseapp.R
+import com.example.comopseapp.ui.theme.AxisColor
 import com.example.comopseapp.ui.theme.ComopseAppTheme
 import kotlinx.coroutines.launch
 
@@ -87,8 +96,8 @@ class ShowData : ComponentActivity() {
             datalist1.addAll(users)
             setContent {
                 ComopseAppTheme{
-//                    Screen1()
-                    UsersNames(datalist = datalist1)
+//                    NavigationDrawerz({UsersNames(datalist = datalist1) })
+                    NavigationDrawerss()
                 }
             }
         }
@@ -98,10 +107,10 @@ class ShowData : ComponentActivity() {
     fun UsersNames(datalist: MutableList<RDbEntity>) {
         Column(
             modifier = Modifier
-                .padding(5.dp)
-                .fillMaxWidth()
+                .padding(top = 60.dp)
+                .fillMaxSize()
         ) {
-            MyActionBar("Customer Details")
+//            MyActionBar("Customer Details")
 
             LazyVerticalGrid(
                 columns = GridCells.Fixed(1),
@@ -279,8 +288,6 @@ Row{
         return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
     }
 
-
-
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun MyActionBar(Title:String) {
@@ -308,146 +315,214 @@ Row{
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun NavigationDrawerss() {
-        val context = LocalContext.current
         val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
         val scope = rememberCoroutineScope()
-
-
-            ModalNavigationDrawer(
-                drawerState = drawerState,
-                drawerContent = {
-                    ModalDrawerSheet(
+        val context = LocalContext.current
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            drawerContent = {
+                ModalDrawerSheet(
+                    Modifier
+                        .fillMaxHeight()
+                        .width(300.dp)
+                        .clip(RectangleShape)
+                ) {
+                    Column(
                         Modifier
-                            .fillMaxHeight()
-                            .width(300.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .fillMaxWidth()
+                            .background(
+                                Brush.horizontalGradient(
+                                    colors = listOf(
+                                        Color.Red,
+                                        Color(0xFF396AFA)
+                                    )
+                                )
+                            )
+                            .padding(10.dp)
                     ) {
+
                         Row(
                             Modifier
                                 .align(Alignment.CenterHorizontally)
-                                .padding(10.dp)
+                                .padding(5.dp)
+//                        .background(color = Color.White)
+
                         ) {
+
 
                             Icon(
                                 painter = painterResource(id = R.drawable.axis_bank_logo2),
+                                tint = Color.White,
                                 contentDescription = "Logo",
-                                Modifier
-                                    .size(20.dp)
+                                modifier = Modifier
+                                    .size(30.dp)
+//                            .clip(CircleShape)
+//                            .background(color = Color.White)
+                                    .align(Alignment.CenterVertically)
+
+
+
                             )
                             Text(
-                                "Axis Bank", modifier = Modifier
-                                    .background(Color.White)
+                                "Axis Bank", modifier = Modifier,
+                                style = MaterialTheme.typography.labelLarge.copy(fontSize = 20.sp),
+                                color = Color.White
+
                             )
                         }
-
 
                         Image(
                             painter = painterResource(id = R.drawable.user),
                             contentDescription = "MyDp",
                             Modifier
-                                .align(Alignment.CenterHorizontally)
+                                .size(120.dp)
+                                .clip(CircleShape)
                                 .background(Color.White)
-                                .padding(10.dp)
-                                .clip(CircleShape),
-                        )
-                        Text(
-                            "", modifier = Modifier
-                                .fillMaxWidth()
-                                .height(2.dp)
                                 .align(Alignment.CenterHorizontally)
-                                .background(Color.White)
-                        )
-                        NavigationDrawerItem(
-                            label = { Text(text = "Home", color = Color.Black) },
-                            selected = false,
-                            onClick = {
-                                Toast.makeText(context, "Hello", Toast.LENGTH_SHORT).show()
-                            },
 
+                        )
+                        Row(
+                            modifier = Modifier,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Person,
+                                contentDescription = "Star"
                             )
-                        NavigationDrawerItem(
-                            label = { Text(text = "Gallery", color = Color.Black) },
-                            selected = false,
-                            onClick = {
-                                Toast.makeText(context, "Gallery", Toast.LENGTH_SHORT).show()
-                            })
-
-                        NavigationDrawerItem(
-                            label = { Text(text = "About me", color = Color.Black) },
-                            selected = false,
-                            onClick = {
-                                Toast.makeText(context, "About me", Toast.LENGTH_SHORT).show()
-                            })
-
-                        Text(
-                            "", modifier = Modifier
-                                .fillMaxWidth()
-                                .height(2.dp)
-                                .align(Alignment.CenterHorizontally)
-                                .background(Color.White)
-                        )
-
-                        NavigationDrawerItem(
-                            label = { Text(text = "Policy", color = Color.Black) },
-                            selected = false,
-                            onClick = {
-                                Toast.makeText(context, "Policy", Toast.LENGTH_SHORT).show()
-                            })
-
-                        NavigationDrawerItem(
-                            label = { Text(text = "Settings", color = Color.Black) },
-                            selected = false,
-                            onClick = {
-                                Toast.makeText(context, "Settings", Toast.LENGTH_SHORT).show()
-                            })
-
-
-                        NavigationDrawerItem(
-                            label = { Text(text = "Logout", color = Color.Black) },
-                            selected = false,
-                            onClick = {
-                                Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show()
-                            })
-                        // ...other drawer items
-                    }
-                },
-                gesturesEnabled = true
-            ) {
-//Box (Modifier.fillMaxSize()){
-                TopAppBar(
-                    title = { Text("Customer Account") },
-                    modifier = Modifier.background(color = Color.White),
-                    actions = {
-                        IconButton(onClick = { }) {
-                            Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
+                            Spacer(modifier = Modifier.width(2.dp))
+                            Text(
+                                "Username",
+                                modifier = Modifier,
+                                style = MaterialTheme.typography.labelLarge.copy(fontSize = 10.sp),
+                            )
+                        }
+                        Row(
+                            modifier = Modifier,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Phone,
+                                contentDescription = "Star"
+                            )
+                            Spacer(modifier = Modifier.width(2.dp))
+                            Text(
+                                "+9899289232", modifier = Modifier,
+                                style = MaterialTheme.typography.labelLarge.copy(fontSize = 10.sp),
+                            )
                         }
 
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            scope.launch {
-                                if (drawerState.isClosed) {
-                                    drawerState.open()
-                                } else {
-                                    drawerState.close()
-                                }
+                    }
+                    Text(
+                        "", modifier = Modifier
+                            .fillMaxWidth()
+                            .height(2.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .background(Color.White)
+                    )
+                    NavigationDrawerItem(
+                        label = { Text(text = "Home", color = Color.Black) },
+                        selected = false,
+                        onClick = { Toast.makeText(context, "Home", Toast.LENGTH_SHORT).show() },
+                        icon = {
+                            Icon(imageVector = Icons.Filled.Home, contentDescription = "Menu")
+                        }
+                    )
+                    NavigationDrawerItem(
+                        label = { Text(text = "Gallery", color = Color.Black) },
+                        selected = false,
+                        onClick = { Toast.makeText(context, "Gallery", Toast.LENGTH_SHORT).show() },
+                        icon = {
+                            Icon(imageVector = Icons.Filled.Face, contentDescription = "Menu")
+                        }
+
+                    )
+
+                    NavigationDrawerItem(
+                        label = { Text(text = "About me", color = Color.Black) },
+                        selected = false,
+                        onClick = {
+                            Toast.makeText(context, "About me", Toast.LENGTH_SHORT).show()
+                        },
+                        icon = {
+                            Icon(imageVector = Icons.Filled.Person, contentDescription = "Menu")
+                        })
+
+                    Text(
+                        "", modifier = Modifier
+                            .fillMaxWidth()
+                            .height(2.dp)
+                            .align(Alignment.CenterHorizontally)
+                            .background(Color.White)
+                    )
+
+                    NavigationDrawerItem(
+                        label = { Text(text = "Policy", color = Color.Black) },
+                        selected = false,
+                        onClick = { Toast.makeText(context, "Policy", Toast.LENGTH_SHORT).show() },
+                        icon = {
+                            Icon(imageVector = Icons.Filled.DateRange, contentDescription = "Menu")
+                        }
+                    )
+                    NavigationDrawerItem(
+                        label = { Text(text = "Settings", color = Color.Black) },
+                        selected = false,
+                        onClick = {
+                            Toast.makeText(context, "Settings", Toast.LENGTH_SHORT).show()
+                        },
+                        icon = {
+                            Icon(imageVector = Icons.Filled.Settings, contentDescription = "Menu")
+                        })
+
+                    NavigationDrawerItem(
+                        label = { Text(text = "Logout", color = Color.Black) },
+                        selected = false,
+                        onClick = { Toast.makeText(context, "Logout", Toast.LENGTH_SHORT).show() },
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Filled.MailOutline,
+                                contentDescription = "Menu"
+                            )
+                        })
+                    // ...other drawer items
+                }
+            },
+            gesturesEnabled = true
+        ) {
+//Box (Modifier.fillMaxSize()){
+            TopAppBar(
+                title = { Text("All Customers") },
+                modifier = Modifier.background(color = Color.White),
+                actions = {
+                    IconButton(onClick = { }) {
+                        Icon(imageVector = Icons.Filled.Search, contentDescription = "Search")
+                    }
+
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        scope.launch {
+                            if (drawerState.isClosed) {
+                                drawerState.open()
+                            } else {
+                                drawerState.close()
                             }
                         }
-
-                        )
-
-                        {
-                            Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu")
-                        }
                     }
-                )
-            }
+
+                    )
+
+                    {
+                        Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu")
+                    }
+                }
+            )
 //}
-
-            // Screen content
-
-
+            UsersNames(datalist = datalist1)
         }
 
+
+    }
 
 
 
