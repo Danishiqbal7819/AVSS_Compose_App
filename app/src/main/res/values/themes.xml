@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.ComopseApp" parent="android:Theme.Material.Light.DarkActionBar" >
+    <item name="colorPrimary">@color/Red</item> <!-- Action Bar color -->
+    <item name="colorPrimaryDark">#E84666</item> <!-- Action Bar color -->
+        <item name="colorAccent">#FF03DAC5</item> <!-- Accent color --></style>
+
+    <style name="Theme.ComopseApp1" parent="Theme.AppCompat.Light.DarkActionBar" >
+        <item name="colorPrimary">@color/Red</item> <!-- Action Bar color -->
+        <item name="colorPrimaryDark">#E84666</item> <!-- Action Bar color -->
+        <item name="colorAccent">#FF03DAC5</item> <!-- Accent color --></style>
+
+    <style name="RDbAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here -->
+        <item name="colorPrimary">@color/Red</item> <!-- Action Bar color -->
+        <item name="colorAccent">#FF03DAC5</item> <!-- Accent color -->
+    </style>
+</resources>
